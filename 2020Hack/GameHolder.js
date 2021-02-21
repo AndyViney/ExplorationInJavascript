@@ -3,6 +3,7 @@ var user;
 var active;
 var enemy;
 var enemyTwo;
+var enemyThree;
 var Score;
 var shot;
 function startGame() {
@@ -78,13 +79,38 @@ function updateGameArea() {
 	if (enemyTwo.crashWith(user)) {
             gameOver();
     }
-if(enemyTwo.hitBottom()){
+	if(enemyTwo.hitBottom()){
 	enemyTwo=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10)
 		enemyTwo.speedY=Math.floor(Math.random()*3)+ 1;;
 	}
 	
+	if (user.score>3){
+		enemyThree.speedY=Math.floor(Math.random()*3)+ 1;
+		enemyThree.newPos();//arrays not working so need less efficant form
+	enemyThree.update();
+	}
+	
+		
+
+	if (enemyThree.crashWith(shot)) {
+            enemyThree.hit(user);
+			 enemyThree=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10);
+		enemyThree.speedY=Math.floor(Math.random()*3)+ 1;
+			shot.x = -10;
+			shot.speedY=0;
+		
+    }
+	if (enemyThree.crashWith(user)) {
+            gameOver();
+    }
+	if(enemyThree.hitBottom()){
+	enemyThree=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10)
+		enemyThree.speedY=Math.floor(Math.random()*3)+ 1;
+	}
+	
+	
 	  Score.text="SCORE: " + user.score;
-    Score.update();
+	  Score.update();
 }
 
 function everyinterval(n) {
@@ -141,9 +167,12 @@ function spawn(){
 		enemy.speedY=1;
 		 enemyTwo=new Enemy(40, 60,  "green", myGameArea.canvas.width/2, -120)
 		enemyTwo.speedY=1;
+		enemyThree=new Enemy(40, 60,  "green", myGameArea.canvas.width/2, -10)
+		enemyThree.speedY=1;
 		active=true
 		shot = new Bullet(10, 10, "red", width+10, user.y);
 		shot.speedY=-5;
+		
 		
     }
    
