@@ -7,6 +7,7 @@ var enemyThree;
 var Score;
 var shot;
 var shotTwo;
+var flag
 function startGame() {
  
    Score = new ScoreBoard("30px", "Consolas", "red", 280, 40, "text");
@@ -103,10 +104,11 @@ function updateGameArea() {
 		enemyTwo.speedY=Math.floor(Math.random()*3)+ 1;;
 	}
 	
-	if (user.score>3){
+	if (user.score>5){
 		enemyThree.speedY=Math.floor(Math.random()*3)+ 1;
 		enemyThree.newPos();//arrays not working so need less efficant form
 	enemyThree.update();
+	flag=true;
 	}
 	
 		
@@ -198,16 +200,19 @@ function spawn(){
 		shot.speedY=-5;
 		shotTwo = new Bullet(10, 10, "red", width-10, user.y);
 		shotTwo.speedY=-5;
+		flag=false;
     }
    
 
 function shoot(width){
 	shot = new Bullet(10, 10, "red", width-10, user.y);
 	shot.speedY=-5;
-	//if (user.score>3){
-			shotTwo = new Bullet(10, 10, "red", width+5, user.y);
+	shotTwo = new Bullet(10, 10, "red", width+5, user.y);
 			shotTwo.speedY=-5;
-		//}
+	if (user.score<5){
+		shotTwo.speedY=0;
+		shotTwo.y=-10;
+	}
 }
 
 function gameOver(){
