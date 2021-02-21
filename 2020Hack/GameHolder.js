@@ -6,6 +6,7 @@ var enemyTwo;
 var enemyThree;
 var Score;
 var shot;
+var shotTwo;
 function startGame() {
  
    Score = new ScoreBoard("30px", "Consolas", "red", 280, 40, "text");
@@ -46,6 +47,8 @@ function updateGameArea() {
 	
 	shot.newPos();
 	shot.update();
+	shotTwo.newPos();
+	shotTwo.update();
 	enemy.newPos();//arrays not working so need less efficant form
 	enemy.update();
 
@@ -55,6 +58,14 @@ function updateGameArea() {
 		enemy.speedY=Math.floor(Math.random()*3)+ 1;
 			shot.x = -10;
 			shot.speedY=0;
+			
+    }
+	if (enemy.crashWith(shotTwo)) {
+            enemy.hit(user);
+			 enemy=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10);
+		enemy.speedY=Math.floor(Math.random()*3)+ 1;
+			shotTwo.x = -10;
+			shotTwo.speedY=0;
 			
     }
 	if (enemy.crashWith(user)) {
@@ -73,6 +84,14 @@ function updateGameArea() {
 			 enemyTwo=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10);
 		enemyTwo.speedY=Math.floor(Math.random()*3)+ 1;
 			shot.x = -10;
+			shot.speedY=0;
+		
+    }
+	if (enemyTwo.crashWith(shotTwo)) {
+            enemyTwo.hit(user);
+			 enemyTwo=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10);
+		enemyTwo.speedY=Math.floor(Math.random()*3)+ 1;
+			shotTwo.x = -10;
 			shot.speedY=0;
 		
     }
@@ -98,6 +117,14 @@ function updateGameArea() {
 		enemyThree.speedY=Math.floor(Math.random()*3)+ 1;
 			shot.x = -10;
 			shot.speedY=0;
+		
+    }
+	if (enemyThree.crashWith(shotTwo)) {
+            enemyThree.hit(user);
+			 enemyThree=new Enemy(40, 60, "green", Math.floor(Math.random() * myGameArea.canvas.width), -10);
+		enemyThree.speedY=Math.floor(Math.random()*3)+ 1;
+			shotTwo.x = -10;
+			shotTwo.speedY=0;
 		
     }
 	if (enemyThree.crashWith(user)) {
@@ -151,9 +178,7 @@ document.addEventListener('keydown', function(event) {
 	
         shoot(user.x+(user.width/2)-2.5);
 		
-		if (user.socre>3){
-			shoot(user.x+(user.width/2)+2.5)
-		}
+		
 	
     }
 	
@@ -161,7 +186,6 @@ document.addEventListener('keydown', function(event) {
 });
 
 function spawn(){
-	  //   myObstacles.push(new Enemy(30, 30, "green", myGameArea.canvas.width/2, height));
          user = new User(40, 60, "blue", myGameArea.canvas.width/2, myGameArea.canvas.width-20);
 		enemy=new Enemy(40, 60,  "green", myGameArea.canvas.width/2, 0)
 		enemy.speedY=1;
@@ -172,15 +196,18 @@ function spawn(){
 		active=true
 		shot = new Bullet(10, 10, "red", width+10, user.y);
 		shot.speedY=-5;
-		
-		
+		shotTwo = new Bullet(10, 10, "red", width-10, user.y);
+		shotTwo.speedY=-5;
     }
    
 
 function shoot(width){
-	shot = new Bullet(10, 10, "red", width, user.y);
+	shot = new Bullet(10, 10, "red", width-10, user.y);
 	shot.speedY=-5;
-	
+	//if (user.score>3){
+			shotTwo = new Bullet(10, 10, "red", width+5, user.y);
+			shotTwo.speedY=-5;
+		//}
 }
 
 function gameOver(){

@@ -15,10 +15,12 @@ function Bullet(width, height, color, x, y) {
 		ctx.drawImage(img,this.x,this.y,width,height);
 		
     }
+	 
     this.newPos = function() {
         this.y += this.speedY ;
 		this.hitTop();
     }
+	
     
 	 this.hitTop = function() {
         var screemTop = myGameArea.canvas.height + this.height;
